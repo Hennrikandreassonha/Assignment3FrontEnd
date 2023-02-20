@@ -23,43 +23,64 @@ h1 {
 /*fixa höjd*/
   top: -75px;
 }
-.todoapp {
+.to-do-app {
   background: #fff;
   margin: 130px 0 40px 0;
   position: relative;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
 }
-section {
-  display: block;
+.new-todo-section{
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.003);
+    box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
 }
-.new-todo {
+#new-note {
   padding: 16px 16px 16px 0px;
   border: none;
-  background: rgba(0, 0, 0, 0.003);
-  box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
   width: 100%;
   position: relative;
   font-size: 24px;
   margin: 0;
-  margin-left: 10px;
   display: inline-block;
 }
-.new-todo:focus{
+#new-note{
+    border: none;
+    outline: none;
+}
+#new-note:focus{
     border: none;
     outline: none;
 }
 #checkmarker{
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+}
+ul{
+    padding:0;
+    margin:0;
+}
+li{
+  list-style-type: none;
+  padding:0;
+  margin:0;
+  display: flex;
+  align-items: center;
+}
+input[type='checkbox']{
     width:20px;
     height:20px;
-    margin: auto;
+    margin:10px;
 }
-#checkmarkerdiv{
-    width:50px;
-    display: flex;
-    justify-content: space-between;
+.list-text{
+    left:0px;
+    position: relative;
 }
-#new-serch{
-    display: flex;
-    align-content: center;
-    align-items: center;
+.remove-btn{
+    border: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    background-color: #fff;
 }

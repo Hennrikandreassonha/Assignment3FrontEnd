@@ -8,17 +8,31 @@
     <title>Document</title>
   </head>
   <body>
-      <header>
-        <h1>todos</h1>
+    <header>
+      <h1>todos</h1>
     </header>
-    <section class="todoapp">
-        <section id="new-serch">
-            <div id="checkmarkerdiv">
-                <img src="down-arrow.png" id="checkmarker">
-            </div>
-            <input
-            class="new-todo" placeholder="What needs to be done?" autofocus="">
-        </section>
+    <section class="to-do-app">
+      <section class="new-todo-section">
+        <img src="down-arrow.png" id="checkmarker" />
+        <form>
+          <input
+            type="text"
+            placeholder="What needs to be done?"
+            id="new-note"
+          />
+        </form>
+      </section>
+      <ul id="to-do-list">
+        <li>
+          <input type="checkbox" />
+          <label class="list-text">
+              Hej
+          </label>
+          <button class="remove-btn">
+            ❌
+          </button>
+        </li>
+      </ul>
     </section>
   </body>
 </html>
