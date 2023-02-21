@@ -32,7 +32,8 @@ h1 {
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.003);
-    box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
+    /* box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%); */
+    border-bottom: 1px solid #ededed;
 }
 #new-note {
   padding: 16px 16px 16px 0px;
@@ -66,6 +67,7 @@ li{
   margin:0;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #ededed;
 }
 input[type='checkbox']{
     width:20px;
@@ -78,8 +80,41 @@ input[type='checkbox']{
 }
 #remove-btn{
     border: 0;
-    display: block;
     margin-left: auto;
     background-color: #fff;
     margin-right: 10px;
+    visibility: hidden;
+    display: inline-block;
+}
+#todoInfo{
+  display: grid;
+  grid-template:
+  "a b c" ;
+  height: 50px;
+  /* justify-content: center; */
+  align-items: center;
+}
+ 
+#itemLeft{
+  justify-content: left;
+  margin-left: 5px;
+}
+#todoInfo button{
+  display: inline;
+  margin: 3px;
+  padding: 3px 7px;
+  border: 0;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+#todoInfo button:focus{
+  outline: none;
+  border: 1px solid  rgba(175, 47, 47, 0.2);
+}
+#clear-completed {
+  position: absolute;
+  right: 5px;
+  background-color: #fff;
+  border: 0;
 }
