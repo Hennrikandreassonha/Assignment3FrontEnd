@@ -86,7 +86,7 @@ input[type='checkbox']{
     visibility: hidden;
     display: inline-block;
 }
-#todoInfo{
+#to-do-info{
   display: grid;
   grid-template:
   "a b c" ;
@@ -124,10 +124,9 @@ input[type='checkbox']{
 #clear-completed:hover{
   text-decoration: underline;
 }
-#select-all{
+#toggle-all{
   background-color: #fff;
   border: 0;
-  /* visibility: hidden; */
-  
+  visibility: hidden;
 
 }

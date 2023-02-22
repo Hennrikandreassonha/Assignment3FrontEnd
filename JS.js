@@ -36,7 +36,7 @@ form.onsubmit = (event) => {
 
     form.reset();
     UpdateAmountItemsLeft();
-    ShowTodoFilter();
+    ShowFooterAndToggleBtn();
   }
 };
 
@@ -98,6 +98,7 @@ function RemoveItem(index) {
   allNotesList.splice(index, 1);
   UpdateAmountItemsLeft();
   ShowClearCompletedBtn();
+  ShowFooterAndToggleBtn();
 }
 
 function CompleteNote(event) {
@@ -191,15 +192,8 @@ function ShowClearCompletedBtn() {
     }
   }
 }
-function ShowTodoFilter() {
-  let filterTodo = document.querySelector("#todoInfo");
 
-  if (allNotesList.length != 0) {
-    filterTodo.style.visibility = "visible";
-  }
-}
-
-let toggleAllBtn = document.querySelector("#select-all");
+let toggleAllBtn = document.querySelector("#toggle-all");
 
 toggleAllBtn.addEventListener("click", ToggleAllNotes);
 
@@ -227,11 +221,15 @@ function ToggleAllNotes() {
   UpdateAmountItemsLeft();
 }
 
-function ShowToggleBtn() {
+function ShowFooterAndToggleBtn() {
+  let footer = document.querySelector("#to-do-info");
+
   if (allNotesList.length > 0) {
-    selectAllBtn.style.visibility = "visible";
-  }
-  else{
-    selectAllBtn.style.visibility = "invisible";
+    toggleAllBtn.style.visibility = "visible";
+    footer.style.visibility = "visible";
+  } else {
+    toggleAllBtn.style.visibility = "hidden";
+    footer.style.visibility = "hidden";
+
   }
 }
