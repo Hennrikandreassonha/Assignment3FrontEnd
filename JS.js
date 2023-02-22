@@ -206,8 +206,16 @@ toggleAllBtn.addEventListener("click", ToggleAllNotes);
 function ToggleAllNotes() {
   //Om ingen är selectad eller om minst 1 är det.
 
-  if (GetAmountNotesDone() >= 0) {
-    //Select all
+  if (GetAmountNotesDone() == allNotesList.length) {
+    //If no note is selected or if more than 1 is selected we select all notes.
+    allNotesList.forEach((element) => {
+      let checkBox = element.querySelector('input[type="checkbox"]');
+      checkBox.checked = false;
+
+      let noteText = element.querySelector("label");
+      noteText.style.textDecoration = "none";
+    });
+  } else {
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
       checkBox.checked = true;
@@ -216,15 +224,7 @@ function ToggleAllNotes() {
       noteText.style.textDecoration = "line-through";
     });
   }
-  else if (GetAmountNotesLeft == 0){
-    allNotesList.forEach((element) => {
-      let checkBox = element.querySelector('input[type="checkbox"]');
-      checkBox.checked = false;
-
-      let noteText = element.querySelector("label");
-      noteText.style.textDecoration = "none";
-    });
-  }
+  UpdateAmountItemsLeft();
 }
 
 function ShowToggleBtn() {
