@@ -35,6 +35,8 @@ form.onsubmit = (event) => {
     });
 
     form.reset();
+    UpdateAmountItemsLeft();
+    ShowTodoFilter();
   }
 };
 
@@ -63,7 +65,6 @@ function FilterNotes(status) {
     });
   } else if (status == "completed") {
     allNotesList.forEach((element) => {
-
       let checkBox = element.querySelector('input[type="checkbox"]');
 
       if (checkBox.checked) {
@@ -72,7 +73,6 @@ function FilterNotes(status) {
     });
   } else if (status == "active") {
     allNotesList.forEach((element) => {
-
       let checkBox = element.querySelector('input[type="checkbox"]');
 
       if (!checkBox.checked) {
@@ -96,6 +96,8 @@ function RemoveItem(index) {
 
   //Ta bort från listan
   allNotesList.splice(index, 1);
+  UpdateAmountItemsLeft();
+  ShowClearCompletedBtn();
 }
 
 function CompleteNote(event) {
@@ -109,6 +111,9 @@ function CompleteNote(event) {
   } else {
     noteText.style.textDecoration = "none";
   }
+
+  UpdateAmountItemsLeft();
+  ShowClearCompletedBtn();
 }
 function ShowDeleteBtn(event) {
   let liElement = event.target;
@@ -123,4 +128,107 @@ function HideDeleteBtn(event) {
   let deleteBtn = liElement.querySelector("button");
 
   deleteBtn.style.visibility = "hidden";
+}
+function UpdateAmountItemsLeft() {
+  let counter = GetAmountNotesLeft();
+
+  let pluralSingular = counter != 1 ? "s" : "";
+
+  let itemLeftlabel = document.querySelector("#itemLeft");
+
+  itemLeftlabel.textContent = `${counter} item${pluralSingular} left`;
+}
+
+let clearCompletedBtn = document.querySelector("#clear-completed");
+
+clearCompletedBtn.addEventListener("click", ClearCompleted);
+function ClearCompleted() {
+  allNotesList.forEach((element) => {
+    let checkBox = element.querySelector('input[type="checkbox"]');
+
+    if (checkBox.checked) {
+      element.remove();
+    }
+  });
+}
+function GetAmountNotesLeft() {
+  let counter = 0;
+
+  allNotesList.forEach((element) => {
+    let checkBox = element.querySelector('input[type="checkbox"]');
+
+    if (!checkBox.checked) {
+      counter++;
+    }
+  });
+
+  return counter;
+}
+function GetAmountNotesDone() {
+  let counter = 0;
+
+  allNotesList.forEach((element) => {
+    let checkBox = element.querySelector('input[type="checkbox"]');
+
+    if (checkBox.checked) {
+      counter++;
+    }
+  });
+
+  return counter;
+}
+function ShowClearCompletedBtn() {
+  let clearCompletedBtn = document.querySelector("#clear-completed");
+
+  for (let index = 0; index < allNotesList.length; index++) {
+    let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
+
+    if (checkBox.checked) {
+      clearCompletedBtn.style.visibility = "visible";
+      break;
+    } else {
+      clearCompletedBtn.style.visibility = "hidden";
+    }
+  }
+}
+function ShowTodoFilter() {
+  let filterTodo = document.querySelector("#todoInfo");
+
+  if (allNotesList.length != 0) {
+    filterTodo.style.visibility = "visible";
+  }
+}
+
+let toggleAllBtn = document.querySelector("#select-all");
+
+toggleAllBtn.addEventListener("click", ToggleAllNotes);
+
+function ToggleAllNotes() {
+  //Om ingen är selectad eller om minst 1 är det.
+
+  if (GetAmountNotesDone() >= 0) {
+    //Select all
+    allNotesList.forEach((element) => {
+      let checkBox = element.querySelector('input[type="checkbox"]');
+      checkBox.checked = true;
+
+      let noteText = element.querySelector("label");
+      noteText.style.textDecoration = "line-through";
+    });
+  }
+  else if (GetAmountNotesLeft == 0){
+    allNotesList.forEach((element) => {
+      let checkBox = element.querySelector('input[type="checkbox"]');
+      checkBox.checked = false;
+
+      let noteText = element.querySelector("label");
+      noteText.style.textDecoration = "none";
+    });
+  }
+}
+
+function ShowToggleBtn() {
+  if (allNotesList.length > 0) {
+    selectAllBtn.style.visibility = "visible";
+  }
 }

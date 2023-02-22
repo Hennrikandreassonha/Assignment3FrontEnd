@@ -91,15 +91,15 @@ input[type='checkbox']{
   grid-template:
   "a b c" ;
   height: 50px;
-  /* justify-content: center; */
   align-items: center;
+  visibility: hidden;
 }
  
 #itemLeft{
   justify-content: left;
   margin-left: 5px;
 }
-#todoInfo button{
+.filterBtn{
   display: inline;
   margin: 3px;
   padding: 3px 7px;
@@ -108,8 +108,10 @@ input[type='checkbox']{
   border: 1px solid transparent;
   border-radius: 3px;
 }
-#todoInfo button:focus{
-  outline: none;
+.filterBtn:focus{
+  border: 1px solid  rgba(175, 47, 47, 0.2);
+}
+.filterBtn:hover{
   border: 1px solid  rgba(175, 47, 47, 0.2);
 }
 #clear-completed {
@@ -117,4 +119,15 @@ input[type='checkbox']{
   right: 5px;
   background-color: #fff;
   border: 0;
+  visibility: hidden;
+}
+#clear-completed:hover{
+  text-decoration: underline;
+}
+#select-all{
+  background-color: #fff;
+  border: 0;
+  /* visibility: hidden; */
+  
+
 }
