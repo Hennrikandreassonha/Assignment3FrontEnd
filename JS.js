@@ -226,10 +226,9 @@ function ShowFooterAndToggleBtn() {
 
   if (allNotesList.length > 0) {
     toggleAllBtn.style.visibility = "visible";
-    footer.style.visibility = "visible";
+    footer.style.display = "block";
   } else {
     toggleAllBtn.style.visibility = "hidden";
-    footer.style.visibility = "hidden";
-
+    footer.style.display = "none";
   }
 }

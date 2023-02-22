@@ -92,7 +92,7 @@ input[type='checkbox']{
   "a b c" ;
   height: 50px;
   align-items: center;
-  visibility: hidden;
+  display: none;
 }
  
 #itemLeft{
@@ -129,4 +129,7 @@ input[type='checkbox']{
   border: 0;
   visibility: hidden;
 
+}
+#filter-options{
+  display: inline-block;
 }
