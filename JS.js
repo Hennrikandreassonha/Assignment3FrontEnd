@@ -231,4 +231,7 @@ function ShowToggleBtn() {
   if (allNotesList.length > 0) {
     selectAllBtn.style.visibility = "visible";
   }
+  else{
+    selectAllBtn.style.visibility = "invisible";
+  }
 }
