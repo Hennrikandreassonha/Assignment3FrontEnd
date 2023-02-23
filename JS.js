@@ -28,6 +28,8 @@ form.onsubmit = (event) => {
     var deleteBtn = document.createElement("button");
     deleteBtn.id = "remove-btn";
     deleteBtn.textContent = "❌";
+    deleteBtn.className = "visibility-hidden";
+
 
     newNote.append(checkbox, noteText, deleteBtn);
 
@@ -112,9 +114,9 @@ function completeNote(event) {
   let noteText = noteLiElement.querySelector("label");
 
   if (selectedCheckbox.checked) {
-    noteText.style.textDecoration = "line-through";
+    noteText.className='text-decoration-line';
   } else {
-    noteText.style.textDecoration = "none";
+    noteText.className = "text-decoration-none";
   }
 
   updateAmountItemsLeft();
@@ -126,7 +128,7 @@ function showDeleteBtn(event) {
   let deleteBtn = liElement.querySelector("button");
 
   if (deleteBtn != null) {
-    deleteBtn.style.visibility = "visible";
+    deleteBtn.className = "visibility-visible";
   }
 }
 
@@ -134,7 +136,7 @@ function hideDeleteBtn(event) {
   let liElement = event.target;
   let deleteBtn = liElement.querySelector("button");
 
-  deleteBtn.style.visibility = "hidden";
+  deleteBtn.className = "visibility-hidden";
 }
 
 function updateAmountItemsLeft() {
@@ -201,10 +203,10 @@ function showClearCompletedBtn() {
     let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
 
     if (checkBox.checked) {
-      clearCompletedBtn.style.visibility = "visible";
+      clearCompletedBtn.className = "visibility-visible";
       break;
     } else {
-      clearCompletedBtn.style.visibility = "hidden";
+      clearCompletedBtn.className = "visibility-hidden";
     }
   }
 }
@@ -217,11 +219,14 @@ function toggleAllNotes() {
   if (getAmountNotesDone() == allNotesList.length) {
     //If no note is selected or if more than 1 is selected we select all notes.
     allNotesList.forEach((element) => {
+      
       let checkBox = element.querySelector('input[type="checkbox"]');
       checkBox.checked = false;
 
       let noteText = element.querySelector("label");
-      noteText.style.textDecoration = "none";
+
+      noteText.className = "text-decoration-none";
+
     });
   } else {
     allNotesList.forEach((element) => {
@@ -229,7 +234,8 @@ function toggleAllNotes() {
       checkBox.checked = true;
 
       let noteText = element.querySelector("label");
-      noteText.style.textDecoration = "line-through";
+      noteText.className = "text-decoration-line";
+
     });
   }
   updateAmountItemsLeft();
@@ -239,13 +245,11 @@ function showFooterAndToggleBtn() {
   let toDoInfo = document.querySelector("#to-do-info");
 
   if (allNotesList.length > 0) {
-    toggleAllBtn.classList.add("visibility-visible")
-    toggleAllBtn.classList.remove("visibility-hidden")
-
-    toDoInfo.style.display = "grid";
-  } else {
-    toggleAllBtn.classList.remove("visibility-visible")
-    toggleAllBtn.classList.add("visibility-hidden")
-    // toDoInfo.style.display = "none";
+    toggleAllBtn.className = "visibility-visible";
+    toDoInfo.className = "display-grid";
+  } 
+  else {
+    toggleAllBtn.className = "visibility-hidden";
+    toDoInfo.className = "display-none";
   }
 }

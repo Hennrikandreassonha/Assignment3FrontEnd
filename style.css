@@ -83,18 +83,16 @@ input[type='checkbox']{
     margin-left: auto;
     background-color: #fff;
     margin-right: 10px;
-    visibility: hidden;
     display: inline-block;
 }
 #to-do-info{
-  display: grid;
   grid-template:
   "a b c" ;
   height: 50px;
   align-items: center;
-  display: none;
 }
 #itemLeft{
+  
   justify-content: left;
   margin-left: 5px;
   width: 70px;
@@ -119,7 +117,6 @@ input[type='checkbox']{
   right: 5px;
   background-color: #fff;
   border: 0;
-  visibility: hidden;
 }
 #clear-completed:hover{
   text-decoration: underline;
@@ -132,7 +129,6 @@ input[type='checkbox']{
   display: inline-block;
 }
 footer p{
-
   text-align: center;
   line-height: 1;
   font-size: 10px;
@@ -149,4 +145,10 @@ footer p{
 }
 .text-decoration-none{
   text-decoration: "none";
+}
+.display-grid{
+  display: grid;
+}
+.display-none{
+  display: none;
 }
