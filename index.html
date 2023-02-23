@@ -12,9 +12,9 @@
     <header>
       <h1>todos</h1>
     </header>
-    <section class="to-do-app">
+    <section ction class="to-do-app">
       <section class="add-note-section">
-        <button id="toggle-all">
+        <button id="toggle-all" class="visibility-hidden">
           <img src="down-arrow.png" id="checkmarker" />
         </button>
         <form>
@@ -26,16 +26,21 @@
           />
         </form>
       </section>
-      <ul id="to-do-list">
-      </ul>
+      <ul id="to-do-list"></ul>
       <section id="to-do-info">
         <span id="itemLeft">1 item left</span>
         <ul id="filter-options">
-          <button class="filterBtn"id="all">All</button>
-          <button class="filterBtn"id="active">Active</button>
-          <button class="filterBtn"id="complete">Completed</button>
+          <button class="filterBtn" id="all">All</button>
+          <button class="filterBtn" id="active">Active</button>
+          <button class="filterBtn" id="complete">Completed</button>
         </ul>
         <button id="clear-completed">Clear completed</button>
+      </section>
     </section>
+    <footer>
+      <p>Double-click to edit a todo</p>
+      <p>Written by Henrik och Alexander</p>
+      <p>Part of TodoMVC</p>
+    </footer>
   </body>
 </html>

@@ -2,6 +2,10 @@ let form = document.querySelector("form");
 
 let allNotesList = [];
 
+let toggleAllBtn = document.querySelector("#toggle-all");
+
+showFooterAndToggleBtn();
+
 form.onsubmit = (event) => {
   event.preventDefault();
 
@@ -11,15 +15,15 @@ form.onsubmit = (event) => {
     let noteList = document.querySelector("ul");
 
     let newNote = document.createElement("li");
-    newNote.addEventListener("mouseover", ShowDeleteBtn);
-    newNote.addEventListener("mouseleave", HideDeleteBtn);
+    newNote.addEventListener("mouseover", showDeleteBtn);
+    newNote.addEventListener("mouseleave", hideDeleteBtn);
 
     let noteText = document.createElement("label");
     noteText.textContent = input;
 
     var checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.addEventListener("click", CompleteNote);
+    checkbox.addEventListener("click", completeNote);
 
     var deleteBtn = document.createElement("button");
     deleteBtn.id = "remove-btn";
@@ -31,12 +35,12 @@ form.onsubmit = (event) => {
     allNotesList.push(newNote);
 
     deleteBtn.addEventListener("click", function (event) {
-      RemoveItem(allNotesList.length - 1);
+      removeItem(allNotesList.length - 1);
     });
 
     form.reset();
-    UpdateAmountItemsLeft();
-    ShowFooterAndToggleBtn();
+    updateAmountItemsLeft();
+    showFooterAndToggleBtn();
   }
 };
 
@@ -45,19 +49,19 @@ let activeNotes = document.querySelector("#active");
 let completedNotes = document.querySelector("#complete");
 
 allNotes.addEventListener("click", function () {
-  FilterNotes("all");
+  filterNotes("all");
 });
 activeNotes.addEventListener("click", function () {
-  FilterNotes("active");
+  filterNotes("active");
 });
 completedNotes.addEventListener("click", function () {
-  FilterNotes("completed");
+  filterNotes("completed");
 });
 
-function FilterNotes(status) {
+function filterNotes(status) {
   let noteList = document.querySelector("#to-do-list");
 
-  RemoveListItems();
+  removeListItems();
 
   if (status == "all") {
     allNotesList.forEach((element) => {
@@ -82,7 +86,7 @@ function FilterNotes(status) {
   }
 }
 
-function RemoveListItems() {
+function removeListItems() {
   let noteList = document.querySelector("#to-do-list");
 
   while (noteList.firstElementChild) {
@@ -90,18 +94,18 @@ function RemoveListItems() {
   }
 }
 
-function RemoveItem(index) {
+function removeItem(index) {
   let selectedBtn = event.target;
   selectedBtn.parentNode.remove();
 
   //Ta bort från listan
   allNotesList.splice(index, 1);
-  UpdateAmountItemsLeft();
-  ShowClearCompletedBtn();
-  ShowFooterAndToggleBtn();
+  updateAmountItemsLeft();
+  showClearCompletedBtn();
+  showFooterAndToggleBtn();
 }
 
-function CompleteNote(event) {
+function completeNote(event) {
   let selectedCheckbox = event.target;
   let noteLiElement = selectedCheckbox.parentNode;
 
@@ -113,10 +117,11 @@ function CompleteNote(event) {
     noteText.style.textDecoration = "none";
   }
 
-  UpdateAmountItemsLeft();
-  ShowClearCompletedBtn();
+  updateAmountItemsLeft();
+  showClearCompletedBtn();
 }
-function ShowDeleteBtn(event) {
+
+function showDeleteBtn(event) {
   let liElement = event.target;
   let deleteBtn = liElement.querySelector("button");
 
@@ -124,14 +129,16 @@ function ShowDeleteBtn(event) {
     deleteBtn.style.visibility = "visible";
   }
 }
-function HideDeleteBtn(event) {
+
+function hideDeleteBtn(event) {
   let liElement = event.target;
   let deleteBtn = liElement.querySelector("button");
 
   deleteBtn.style.visibility = "hidden";
 }
-function UpdateAmountItemsLeft() {
-  let counter = GetAmountNotesLeft();
+
+function updateAmountItemsLeft() {
+  let counter = getAmountNotesLeft();
 
   let pluralSingular = counter != 1 ? "s" : "";
 
@@ -142,9 +149,9 @@ function UpdateAmountItemsLeft() {
 
 let clearCompletedBtn = document.querySelector("#clear-completed");
 
-clearCompletedBtn.addEventListener("click", ClearCompleted);
+clearCompletedBtn.addEventListener("click", clearCompleted);
 
-function ClearCompleted() {
+function clearCompleted() {
 
   for (let index = allNotesList.length - 1; index >= 0; index--) {
 
@@ -156,9 +163,10 @@ function ClearCompleted() {
       checkBox.parentNode.remove();
     }
   }
-  UpdateAmountItemsLeft();
+  updateAmountItemsLeft();
 }
-function GetAmountNotesLeft() {
+
+function getAmountNotesLeft() {
   let counter = 0;
 
   allNotesList.forEach((element) => {
@@ -171,7 +179,8 @@ function GetAmountNotesLeft() {
 
   return counter;
 }
-function GetAmountNotesDone() {
+
+function getAmountNotesDone() {
   let counter = 0;
 
   allNotesList.forEach((element) => {
@@ -184,7 +193,8 @@ function GetAmountNotesDone() {
 
   return counter;
 }
-function ShowClearCompletedBtn() {
+
+function showClearCompletedBtn() {
   let clearCompletedBtn = document.querySelector("#clear-completed");
 
   for (let index = 0; index < allNotesList.length; index++) {
@@ -199,14 +209,12 @@ function ShowClearCompletedBtn() {
   }
 }
 
-let toggleAllBtn = document.querySelector("#toggle-all");
+toggleAllBtn.addEventListener("click", toggleAllNotes);
 
-toggleAllBtn.addEventListener("click", ToggleAllNotes);
-
-function ToggleAllNotes() {
+function toggleAllNotes() {
   //Om ingen är selectad eller om minst 1 är det.
 
-  if (GetAmountNotesDone() == allNotesList.length) {
+  if (getAmountNotesDone() == allNotesList.length) {
     //If no note is selected or if more than 1 is selected we select all notes.
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
@@ -224,17 +232,20 @@ function ToggleAllNotes() {
       noteText.style.textDecoration = "line-through";
     });
   }
-  UpdateAmountItemsLeft();
+  updateAmountItemsLeft();
 }
 
-function ShowFooterAndToggleBtn() {
+function showFooterAndToggleBtn() {
   let toDoInfo = document.querySelector("#to-do-info");
 
   if (allNotesList.length > 0) {
-    toggleAllBtn.style.visibility = "visible";
+    toggleAllBtn.classList.add("visibility-visible")
+    toggleAllBtn.classList.remove("visibility-hidden")
+
     toDoInfo.style.display = "grid";
   } else {
-    toggleAllBtn.style.visibility = "hidden";
-    toDoInfo.style.display = "none";
+    toggleAllBtn.classList.remove("visibility-visible")
+    toggleAllBtn.classList.add("visibility-hidden")
+    // toDoInfo.style.display = "none";
   }
 }

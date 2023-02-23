@@ -94,7 +94,6 @@ input[type='checkbox']{
   align-items: center;
   display: none;
 }
- 
 #itemLeft{
   justify-content: left;
   margin-left: 5px;
@@ -128,9 +127,26 @@ input[type='checkbox']{
 #toggle-all{
   background-color: #fff;
   border: 0;
-  visibility: hidden;
-
 }
 #filter-options{
   display: inline-block;
+}
+footer p{
+
+  text-align: center;
+  line-height: 1;
+  font-size: 10px;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 50%);
+} 
+.visibility-visible{
+  visibility: visible;
+}
+.visibility-hidden{
+  visibility: hidden;
+}
+.text-decoration-line{
+  text-decoration: "line-through";
+}
+.text-decoration-none{
+  text-decoration: "none";
 }
