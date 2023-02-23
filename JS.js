@@ -143,14 +143,20 @@ function UpdateAmountItemsLeft() {
 let clearCompletedBtn = document.querySelector("#clear-completed");
 
 clearCompletedBtn.addEventListener("click", ClearCompleted);
+
 function ClearCompleted() {
-  allNotesList.forEach((element) => {
-    let checkBox = element.querySelector('input[type="checkbox"]');
+
+  for (let index = allNotesList.length - 1; index >= 0; index--) {
+
+    let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
 
     if (checkBox.checked) {
-      element.remove();
+
+      allNotesList.splice(index,1);
+      checkBox.parentNode.remove();
     }
-  });
+  }
+  UpdateAmountItemsLeft();
 }
 function GetAmountNotesLeft() {
   let counter = 0;
@@ -222,13 +228,13 @@ function ToggleAllNotes() {
 }
 
 function ShowFooterAndToggleBtn() {
-  let footer = document.querySelector("#to-do-info");
+  let toDoInfo = document.querySelector("#to-do-info");
 
   if (allNotesList.length > 0) {
     toggleAllBtn.style.visibility = "visible";
-    footer.style.display = "block";
+    toDoInfo.style.display = "grid";
   } else {
     toggleAllBtn.style.visibility = "hidden";
-    footer.style.display = "none";
+    toDoInfo.style.display = "none";
   }
 }
