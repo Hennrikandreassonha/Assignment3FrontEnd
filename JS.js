@@ -30,7 +30,6 @@ form.onsubmit = (event) => {
     deleteBtn.textContent = "❌";
     deleteBtn.className = "visibility-hidden";
 
-
     newNote.append(checkbox, noteText, deleteBtn);
 
     noteList.append(newNote);
@@ -114,7 +113,7 @@ function completeNote(event) {
   let noteText = noteLiElement.querySelector("label");
 
   if (selectedCheckbox.checked) {
-    noteText.className='text-decoration-line';
+    noteText.className = "text-decoration-line";
   } else {
     noteText.className = "text-decoration-none";
   }
@@ -154,14 +153,11 @@ let clearCompletedBtn = document.querySelector("#clear-completed");
 clearCompletedBtn.addEventListener("click", clearCompleted);
 
 function clearCompleted() {
-
   for (let index = allNotesList.length - 1; index >= 0; index--) {
-
     let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
 
     if (checkBox.checked) {
-
-      allNotesList.splice(index,1);
+      allNotesList.splice(index, 1);
       checkBox.parentNode.remove();
     }
   }
@@ -211,37 +207,47 @@ function showClearCompletedBtn() {
   }
 }
 
-toggleAllBtn.addEventListener("mousedown", function(event){
+toggleAllBtn.addEventListener("mousedown", function (event) {
   event.preventDefault();
   toggleAllNotes();
 });
 
 function toggleAllNotes() {
   //Om ingen är selectad eller om minst 1 är det.
+  
+  //Fixa att den togglar korrekt och filtrerar.
 
   if (getAmountNotesDone() == allNotesList.length) {
-    //If no note is selected or if more than 1 is selected we select all notes.
-    allNotesList.forEach((element) => {
-      
-      let checkBox = element.querySelector('input[type="checkbox"]');
-      checkBox.checked = false;
+    allNotesActive();
+    filterNotes("active");
 
-      let noteText = element.querySelector("label");
-
-      noteText.className = "text-decoration-none";
-
-    });
   } else {
-    allNotesList.forEach((element) => {
-      let checkBox = element.querySelector('input[type="checkbox"]');
-      checkBox.checked = true;
-
-      let noteText = element.querySelector("label");
-      noteText.className = "text-decoration-line";
-
-    });
+    completeAllNotes();
+    filterNotes("completed");
   }
   updateAmountItemsLeft();
+  showClearCompletedBtn();
+}
+
+function completeAllNotes() {
+  allNotesList.forEach((element) => {
+    let checkBox = element.querySelector('input[type="checkbox"]');
+    checkBox.checked = true;
+
+    let noteText = element.querySelector("label");
+    noteText.className = "text-decoration-line";
+  });
+}
+function allNotesActive() {
+  //If no note is selected or if more than 1 is selected we select all notes.
+  allNotesList.forEach((element) => {
+    let checkBox = element.querySelector('input[type="checkbox"]');
+    checkBox.checked = false;
+
+    let noteText = element.querySelector("label");
+
+    noteText.className = "text-decoration-none";
+  });
 }
 
 function showFooterAndToggleBtn() {
@@ -250,8 +256,7 @@ function showFooterAndToggleBtn() {
   if (allNotesList.length > 0) {
     toggleAllBtn.className = "visibility-visible";
     toDoInfo.className = "display-grid";
-  } 
-  else {
+  } else {
     toggleAllBtn.className = "visibility-hidden";
     toDoInfo.className = "display-none";
   }
