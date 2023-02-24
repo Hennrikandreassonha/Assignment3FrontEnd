@@ -211,7 +211,10 @@ function showClearCompletedBtn() {
   }
 }
 
-toggleAllBtn.addEventListener("click", toggleAllNotes);
+toggleAllBtn.addEventListener("mousedown", function(event){
+  event.preventDefault();
+  toggleAllNotes();
+});
 
 function toggleAllNotes() {
   //Om ingen är selectad eller om minst 1 är det.
