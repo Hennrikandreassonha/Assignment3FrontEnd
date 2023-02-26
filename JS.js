@@ -4,6 +4,9 @@ let allNotesList = [];
 
 let toggleAllBtn = document.querySelector("#toggle-all");
 
+let completedToggle = false;
+let activeToggle = false;
+
 showFooterAndToggleBtn();
 
 form.onsubmit = (event) => {
@@ -54,6 +57,7 @@ allNotes.addEventListener("click", function () {
 });
 activeNotes.addEventListener("click", function () {
   filterNotes("active");
+  activeToggle = true;
 });
 completedNotes.addEventListener("click", function () {
   filterNotes("completed");
@@ -68,6 +72,10 @@ function filterNotes(status) {
     allNotesList.forEach((element) => {
       noteList.append(element);
     });
+
+    completedToggle = false;
+    activeToggle = false;
+    
   } else if (status == "completed") {
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
@@ -75,13 +83,20 @@ function filterNotes(status) {
       if (checkBox.checked) {
         noteList.append(element);
       }
+      
+      activeToggle = true;
+      completedToggle = false;
     });
+
   } else if (status == "active") {
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
 
       if (!checkBox.checked) {
         noteList.append(element);
+
+      completedToggle = true;
+      activeToggle = false;
       }
     });
   }
@@ -217,13 +232,22 @@ function toggleAllNotes() {
   
   //Fixa att den togglar korrekt och filtrerar.
 
+  //Om alla är klara så avmarkerar vi dom 
+  //Ingen note är nu klar
   if (getAmountNotesDone() == allNotesList.length) {
-    allNotesActive();
-    filterNotes("active");
 
+    allNotesActive();
+
+    if(activeToggle){
+      filterNotes("completed");
+    }
   } else {
+    //Vi sätter alla notes till att vara klara.
     completeAllNotes();
-    filterNotes("completed");
+
+    if(completedToggle){
+    filterNotes("active");
+    }
   }
   updateAmountItemsLeft();
   showClearCompletedBtn();
