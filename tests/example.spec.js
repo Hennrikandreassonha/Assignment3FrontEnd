@@ -1,13 +1,10 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const exp = require('constants');
 
 test('AddNote', async ({ page }) => {
   await page.goto('http://127.0.0.1:5501/Assignment3FrontEnd/index.html');
 
-  // Expect a title "to contain" a substring.
-  const elem = await page.locator('input');
-
-  
   await page.fill('input[type="text"]', 'Ny notering');
   await page.keyboard.press('Enter');
   
@@ -15,11 +12,19 @@ test('AddNote', async ({ page }) => {
 });
 
 test('One item left controll', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  await page.goto('http://127.0.0.1:5501/Assignment3FrontEnd/index.html');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  await page.fill('input[type="text"]', 'Ny notering');
+  await page.keyboard.press('Enter');
 
-  // Expects the URL to contain intro.
-  await expect(page).toHaveURL(/.*intro/);
+  await expect(page.locator("text = 1 item left")).toBeVisible();
+});
+
+test('3 Notes test', async ({ page }) => {
+  await page.goto('http://127.0.0.1:5501/Assignment3FrontEnd/index.html');
+
+  await page.fill('input[type="text"]', 'Ny notering');
+  await page.keyboard.press('Enter');
+
+  await expect(page.locator("text = 1 item left")).toBeVisible();
 });
