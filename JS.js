@@ -53,51 +53,54 @@ let activeNotes = document.querySelector("#active");
 let completedNotes = document.querySelector("#complete");
 
 allNotes.addEventListener("click", function () {
-  filterNotes("all");
+  // filterNotes("all");
+  completedToggle = false;
+  activeToggle = false;
+  filterNotes();
+
 });
 activeNotes.addEventListener("click", function () {
-  filterNotes("active");
+  // filterNotes("active");
   activeToggle = true;
+  completedToggle = false;
+  filterNotes();
+
 });
 completedNotes.addEventListener("click", function () {
-  filterNotes("completed");
+  // filterNotes("completed");
+  completedToggle = true;
+  activeToggle = false;
+  filterNotes();
+
 });
 
-function filterNotes(status) {
+
+function filterNotes(){
   let noteList = document.querySelector("#to-do-list");
 
   removeListItems();
 
-  if (status == "all") {
+  if (activeToggle){
     allNotesList.forEach((element) => {
-      noteList.append(element);
-    });
+      let checkBox = element.querySelector('input[type="checkbox"]');
 
-    completedToggle = false;
-    activeToggle = false;
-    
-  } else if (status == "completed") {
+      if (!checkBox.checked) {
+        noteList.append(element);
+      }
+    });
+  }
+  else if(completedToggle){
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
 
       if (checkBox.checked) {
         noteList.append(element);
       }
-      
-      activeToggle = true;
-      completedToggle = false;
     });
-
-  } else if (status == "active") {
+  }
+  else{
     allNotesList.forEach((element) => {
-      let checkBox = element.querySelector('input[type="checkbox"]');
-
-      if (!checkBox.checked) {
-        noteList.append(element);
-
-      completedToggle = true;
-      activeToggle = false;
-      }
+      noteList.append(element);
     });
   }
 }
@@ -135,6 +138,8 @@ function completeNote(event) {
 
   updateAmountItemsLeft();
   showClearCompletedBtn();
+
+  filterNotes();
 }
 
 function showDeleteBtn(event) {
@@ -237,20 +242,16 @@ function toggleAllNotes() {
   if (getAmountNotesDone() == allNotesList.length) {
 
     allNotesActive();
-
-    if(activeToggle){
-      filterNotes("completed");
-    }
+    
   } else {
     //Vi sätter alla notes till att vara klara.
     completeAllNotes();
 
-    if(completedToggle){
-    filterNotes("active");
-    }
   }
   updateAmountItemsLeft();
   showClearCompletedBtn();
+  filterNotes();
+
 }
 
 function completeAllNotes() {
