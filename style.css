@@ -33,6 +33,7 @@ h1 {
   margin: 130px 20px 40px 20px;
   position: relative;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
+  min-width: 200px;
 }
 .add-note-section{
     display: flex;
@@ -101,7 +102,7 @@ input[type='checkbox']{
 #itemLeft{
   
   justify-content: left;
-  margin-left: 5px;
+  margin-left: 13px;
   width: 85px;
 }
 .filterBtn{

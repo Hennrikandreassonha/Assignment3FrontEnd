@@ -53,21 +53,21 @@ let activeNotes = document.querySelector("#active");
 let completedNotes = document.querySelector("#complete");
 
 allNotes.addEventListener("click", function () {
-  // filterNotes("all");
+
   completedToggle = false;
   activeToggle = false;
   filterNotes();
 
 });
 activeNotes.addEventListener("click", function () {
-  // filterNotes("active");
+
   activeToggle = true;
   completedToggle = false;
   filterNotes();
 
 });
 completedNotes.addEventListener("click", function () {
-  // filterNotes("completed");
+
   completedToggle = true;
   activeToggle = false;
   filterNotes();
@@ -251,7 +251,6 @@ function toggleAllNotes() {
   updateAmountItemsLeft();
   showClearCompletedBtn();
   filterNotes();
-
 }
 
 function completeAllNotes() {

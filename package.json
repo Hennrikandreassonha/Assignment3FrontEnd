@@ -1,0 +1,21 @@
+{
+  "name": "assignment3frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "JS.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hennrikandreassonha/Assignment3FrontEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hennrikandreassonha/Assignment3FrontEnd/issues"
+  },
+  "homepage": "https://github.com/Hennrikandreassonha/Assignment3FrontEnd#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.31.1"
+  }
+}
