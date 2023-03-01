@@ -4,9 +4,14 @@ let allNotesList = [];
 
 let toggleAllBtn = document.querySelector("#toggle-all");
 
-let completedToggle = false;
 let activeToggle = false;
+let completedToggle = false;
 
+let allNotes = document.querySelector("#all");
+let activeNotes = document.querySelector("#active");
+let completedNotes = document.querySelector("#complete");
+
+removeBorder();
 showFooterAndToggleBtn();
 
 form.onsubmit = (event) => {
@@ -48,39 +53,50 @@ form.onsubmit = (event) => {
   }
 };
 
-let allNotes = document.querySelector("#all");
-let activeNotes = document.querySelector("#active");
-let completedNotes = document.querySelector("#complete");
-
 allNotes.addEventListener("click", function () {
-
   completedToggle = false;
   activeToggle = false;
-  filterNotes();
 
+  removeBorder();
+  filterNotes();
 });
 activeNotes.addEventListener("click", function () {
-
   activeToggle = true;
-  completedToggle = false;
-  filterNotes();
 
+  removeBorder();
+  filterNotes();
 });
 completedNotes.addEventListener("click", function () {
-
   completedToggle = true;
   activeToggle = false;
-  filterNotes();
 
+  removeBorder();
+  filterNotes();
 });
 
-
-function filterNotes(){
+function removeBorder() {
+  if (completedToggle) {
+    allNotes.classList.remove("filterBtn-show-outline");
+    activeNotes.classList.remove("filterBtn-show-outline");
+    completedNotes.classList.add("filterBtn-show-outline");
+  }
+  else if(activeToggle){
+    allNotes.classList.remove("filterBtn-show-outline");
+    activeNotes.classList.add("filterBtn-show-outline");
+    completedNotes.classList.remove("filterBtn-show-outline");
+  }
+  else{
+    allNotes.classList.add("filterBtn-show-outline");
+    activeNotes.classList.remove("filterBtn-show-outline");
+    completedNotes.classList.remove("filterBtn-show-outline");
+  }
+}
+function filterNotes() {
   let noteList = document.querySelector("#to-do-list");
 
   removeListItems();
 
-  if (activeToggle){
+  if (activeToggle) {
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
 
@@ -88,8 +104,7 @@ function filterNotes(){
         noteList.append(element);
       }
     });
-  }
-  else if(completedToggle){
+  } else if (completedToggle) {
     allNotesList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
 
@@ -97,8 +112,7 @@ function filterNotes(){
         noteList.append(element);
       }
     });
-  }
-  else{
+  } else {
     allNotesList.forEach((element) => {
       noteList.append(element);
     });
@@ -138,7 +152,6 @@ function completeNote(event) {
 
   updateAmountItemsLeft();
   showClearCompletedBtn();
-
   filterNotes();
 }
 
@@ -182,6 +195,8 @@ function clearCompleted() {
     }
   }
   updateAmountItemsLeft();
+  showClearCompletedBtn();
+  showFooterAndToggleBtn();
 }
 
 function getAmountNotesLeft() {
@@ -219,10 +234,10 @@ function showClearCompletedBtn() {
     let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
 
     if (checkBox.checked) {
-      clearCompletedBtn.className = "visibility-visible";
+      clearCompletedBtn.className = "display-inline-block";
       break;
     } else {
-      clearCompletedBtn.className = "visibility-hidden";
+      clearCompletedBtn.className = "display-none";
     }
   }
 }
@@ -234,19 +249,14 @@ toggleAllBtn.addEventListener("mousedown", function (event) {
 
 function toggleAllNotes() {
   //Om ingen är selectad eller om minst 1 är det.
-  
-  //Fixa att den togglar korrekt och filtrerar.
 
-  //Om alla är klara så avmarkerar vi dom 
+  //Om alla är klara så avmarkerar vi dom
   //Ingen note är nu klar
   if (getAmountNotesDone() == allNotesList.length) {
-
     allNotesActive();
-    
   } else {
     //Vi sätter alla notes till att vara klara.
     completeAllNotes();
-
   }
   updateAmountItemsLeft();
   showClearCompletedBtn();
