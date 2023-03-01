@@ -17,6 +17,7 @@ showFooterAndToggleBtn();
 form.onsubmit = (event) => {
   event.preventDefault();
 
+  //Adding a new note.
   let input = form.notetext.value;
 
   if (input != "") {
@@ -53,6 +54,7 @@ form.onsubmit = (event) => {
   }
 };
 
+//Options for filtering the notes.
 allNotes.addEventListener("click", function () {
   completedToggle = false;
   activeToggle = false;
@@ -74,23 +76,23 @@ completedNotes.addEventListener("click", function () {
   filterNotes();
 });
 
+//Instead of using the focus property we use an outline to show foucs.
 function removeBorder() {
   if (completedToggle) {
     allNotes.classList.remove("filterBtn-show-outline");
     activeNotes.classList.remove("filterBtn-show-outline");
     completedNotes.classList.add("filterBtn-show-outline");
-  }
-  else if(activeToggle){
+  } else if (activeToggle) {
     allNotes.classList.remove("filterBtn-show-outline");
     activeNotes.classList.add("filterBtn-show-outline");
     completedNotes.classList.remove("filterBtn-show-outline");
-  }
-  else{
+  } else {
     allNotes.classList.add("filterBtn-show-outline");
     activeNotes.classList.remove("filterBtn-show-outline");
     completedNotes.classList.remove("filterBtn-show-outline");
   }
 }
+
 function filterNotes() {
   let noteList = document.querySelector("#to-do-list");
 
@@ -131,7 +133,7 @@ function removeItem(index) {
   let selectedBtn = event.target;
   selectedBtn.parentNode.remove();
 
-  //Ta bort från listan
+  //Remove item from List.
   allNotesList.splice(index, 1);
   updateAmountItemsLeft();
   showClearCompletedBtn();
@@ -171,6 +173,7 @@ function hideDeleteBtn(event) {
   deleteBtn.className = "visibility-hidden";
 }
 
+//Updates the counter with the amount of notes left.
 function updateAmountItemsLeft() {
   let counter = getAmountNotesLeft();
 
@@ -198,7 +201,7 @@ function clearCompleted() {
   showClearCompletedBtn();
   showFooterAndToggleBtn();
 }
-
+//Keep track on how many items is left.
 function getAmountNotesLeft() {
   let counter = 0;
 
@@ -210,9 +213,25 @@ function getAmountNotesLeft() {
     }
   });
 
+  toggleBtnStyle(counter);
+
   return counter;
 }
+function toggleBtnStyle(amountLeft){
 
+  if(amountLeft == 0){
+    toggleAllBtn.classList.add("zeroOpacity");
+    toggleAllBtn.classList.remove("toggle-btn-opacity");
+
+  }
+  else{
+    toggleAllBtn.classList.add("toggle-btn-opacity");
+    toggleAllBtn.classList.remove("zeroOpacity");
+
+  }
+}
+
+//Returns the amount of notes which are not completed.
 function getAmountNotesDone() {
   let counter = 0;
 
@@ -227,18 +246,27 @@ function getAmountNotesDone() {
   return counter;
 }
 
+//Displays the clear completed button depending on if any notes are completed
 function showClearCompletedBtn() {
   let clearCompletedBtn = document.querySelector("#clear-completed");
+  let counter = getAmountNotesDone();
+  const width = window.innerWidth;
 
-  for (let index = 0; index < allNotesList.length; index++) {
-    let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
-
-    if (checkBox.checked) {
-      clearCompletedBtn.className = "display-inline-block";
-      break;
-    } else {
-      clearCompletedBtn.className = "display-none";
-    }
+  //Om skärmen är liten och det finns klara notes
+  if (width < 430 && counter > 0) {
+    clearCompletedBtn.className = "display-inline-block"; 
+  }
+  //Om skärmen är liten och det inte finns några klara
+  else if(width < 430){
+    clearCompletedBtn.className = "display-none";
+  }
+  //Om skärmen är stor och det finns klara notes
+  else if (counter > 0) {
+    clearCompletedBtn.className = "visibility-visible";
+  }
+  //Skärmen är stor och det finns inga klara notes.
+  else{
+    clearCompletedBtn.className = "visibility-hidden";
   }
 }
 
@@ -248,14 +276,10 @@ toggleAllBtn.addEventListener("mousedown", function (event) {
 });
 
 function toggleAllNotes() {
-  //Om ingen är selectad eller om minst 1 är det.
-
-  //Om alla är klara så avmarkerar vi dom
-  //Ingen note är nu klar
+  //If all notes is done we unmark all of them.
   if (getAmountNotesDone() == allNotesList.length) {
     allNotesActive();
   } else {
-    //Vi sätter alla notes till att vara klara.
     completeAllNotes();
   }
   updateAmountItemsLeft();
@@ -288,10 +312,14 @@ function showFooterAndToggleBtn() {
   let toDoInfo = document.querySelector("#to-do-info");
 
   if (allNotesList.length > 0) {
-    toggleAllBtn.className = "visibility-visible";
+    toggleAllBtn.classList.add("visibility-visible");
+    toggleAllBtn.classList.remove("visibility-hidden");
+    
     toDoInfo.className = "display-grid";
   } else {
-    toggleAllBtn.className = "visibility-hidden";
+    toggleAllBtn.classList.remove("visibility-visible");
+    toggleAllBtn.classList.add("visibility-hidden");
+
     toDoInfo.className = "display-none";
   }
 }
