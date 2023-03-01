@@ -181,8 +181,9 @@ input[type='checkbox']{
 footer p{
   text-align: center;
   line-height: 1;
-  font-size: 10px;
+  font-size: 8px;
   text-shadow: 0 1px 0 rgb(255 255 255 / 50%);
+  opacity: 0.5;
 } 
 .visibility-visible{
   visibility: visible;
