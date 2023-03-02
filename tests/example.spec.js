@@ -32,7 +32,13 @@ test('3 Notes test', async ({ page }) => {
   await page.fill('input[type="text"]', 'Note 3');
   await page.keyboard.press('Enter');
 
-  await page.getByRole('checkbox').first().check();
+  //Find listitems
+  const listItems = await page.$$('li');
+  //Find the checkbox of the second list item.
+  const checkbox = await listItems[1].$('input[type="checkbox"]');
+
+  checkbox?.check();
 
   await expect(page.locator("text = 2 items left")).toBeVisible();
+
 });
