@@ -1,6 +1,5 @@
 let form = document.querySelector("form");
 
-let allNotesList = [];
 
 let toggleAllBtn = document.querySelector("#toggle-all");
 
@@ -42,11 +41,8 @@ form.onsubmit = (event) => {
     newNote.append(checkbox, noteText, deleteBtn);
 
     noteList.append(newNote);
-    allNotesList.push(newNote);
-
-    deleteBtn.addEventListener("click", function (event) {
-      removeItem(allNotesList.length - 1);
-    });
+    
+    deleteBtn.addEventListener("click", removeItem);
 
     form.reset();
     updateAmountItemsLeft();
@@ -64,7 +60,7 @@ allNotes.addEventListener("click", function () {
 });
 activeNotes.addEventListener("click", function () {
   activeToggle = true;
-
+  completedToggle=false;
   removeBorder();
   filterNotes();
 });
@@ -94,29 +90,38 @@ function removeBorder() {
 }
 
 function filterNotes() {
-  let noteList = document.querySelector("#to-do-list");
-
-  removeListItems();
+  let noteList = document.querySelectorAll("#to-do-list li");
 
   if (activeToggle) {
-    allNotesList.forEach((element) => {
+    noteList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
+      
+      if (checkBox.checked) {
 
-      if (!checkBox.checked) {
-        noteList.append(element);
+        checkBox.parentNode.className = "display-none"
+      }
+    else {
+        checkBox.parentNode.className = "display-flex"
       }
     });
   } else if (completedToggle) {
-    allNotesList.forEach((element) => {
+    noteList.forEach((element) => {
       let checkBox = element.querySelector('input[type="checkbox"]');
-
+      
       if (checkBox.checked) {
-        noteList.append(element);
-      }
+        checkBox.parentNode.className = "display-flex"
+    }
+    else {
+        checkBox.parentNode.className = "display-none"
+    }
     });
   } else {
-    allNotesList.forEach((element) => {
-      noteList.append(element);
+    noteList.forEach((element) => {
+
+      let checkBox = element.querySelector('input[type="checkbox"]');
+
+      checkBox.parentNode.className = "display-flex"
+      
     });
   }
 }
@@ -129,12 +134,9 @@ function removeListItems() {
   }
 }
 
-function removeItem(index) {
-  let selectedBtn = event.target;
-  selectedBtn.parentNode.remove();
-
-  //Remove item from List.
-  allNotesList.splice(index, 1);
+function removeItem() {
+   this.parentNode.remove();
+  
   updateAmountItemsLeft();
   showClearCompletedBtn();
   showFooterAndToggleBtn();
@@ -189,23 +191,26 @@ let clearCompletedBtn = document.querySelector("#clear-completed");
 clearCompletedBtn.addEventListener("click", clearCompleted);
 
 function clearCompleted() {
-  for (let index = allNotesList.length - 1; index >= 0; index--) {
-    let checkBox = allNotesList[index].querySelector('input[type="checkbox"]');
+  let noteList = document.querySelectorAll("#to-do-list li");
 
-    if (checkBox.checked) {
-      allNotesList.splice(index, 1);
-      checkBox.parentNode.remove();
-    }
-  }
+    noteList.forEach(task => {
+        let checkForCompleted = task.querySelector('input[type="checkbox"]');
+
+        if (checkForCompleted.checked) {
+            task.remove();
+        }
+
+    });
   updateAmountItemsLeft();
   showClearCompletedBtn();
   showFooterAndToggleBtn();
 }
 //Keep track on how many items is left.
 function getAmountNotesLeft() {
+  let noteList = document.querySelectorAll("#to-do-list li");
   let counter = 0;
 
-  allNotesList.forEach((element) => {
+  noteList.forEach((element) => {
     let checkBox = element.querySelector('input[type="checkbox"]');
 
     if (!checkBox.checked) {
@@ -213,7 +218,7 @@ function getAmountNotesLeft() {
     }
   });
 
-  toggleBtnStyle(counter);
+  
 
   return counter;
 }
@@ -233,16 +238,17 @@ function toggleBtnStyle(amountLeft){
 
 //Returns the amount of notes which are not completed.
 function getAmountNotesDone() {
+  let noteList = document.querySelectorAll("#to-do-list li");
   let counter = 0;
 
-  allNotesList.forEach((element) => {
+  noteList.forEach((element) => {
     let checkBox = element.querySelector('input[type="checkbox"]');
 
     if (checkBox.checked) {
       counter++;
     }
   });
-
+  toggleBtnStyle(counter);
   return counter;
 }
 
@@ -276,8 +282,10 @@ toggleAllBtn.addEventListener("mousedown", function (event) {
 });
 
 function toggleAllNotes() {
+
+  let noteList = document.querySelectorAll("#to-do-list li");
   //If all notes is done we unmark all of them.
-  if (getAmountNotesDone() == allNotesList.length) {
+  if (getAmountNotesDone() == noteList.length) {
     allNotesActive();
   } else {
     completeAllNotes();
@@ -288,7 +296,9 @@ function toggleAllNotes() {
 }
 
 function completeAllNotes() {
-  allNotesList.forEach((element) => {
+  let noteList = document.querySelectorAll("#to-do-list li");
+
+  noteList.forEach((element) => {
     let checkBox = element.querySelector('input[type="checkbox"]');
     checkBox.checked = true;
 
@@ -297,8 +307,9 @@ function completeAllNotes() {
   });
 }
 function allNotesActive() {
+  let noteList = document.querySelectorAll("#to-do-list li");
   //If no note is selected or if more than 1 is selected we select all notes.
-  allNotesList.forEach((element) => {
+  noteList.forEach((element) => {
     let checkBox = element.querySelector('input[type="checkbox"]');
     checkBox.checked = false;
 
@@ -309,9 +320,10 @@ function allNotesActive() {
 }
 
 function showFooterAndToggleBtn() {
+  let noteList = document.querySelectorAll("#to-do-list li");
   let toDoInfo = document.querySelector("#to-do-info");
 
-  if (allNotesList.length > 0) {
+  if (noteList.length > 0) {
     toggleAllBtn.classList.add("visibility-visible");
     toggleAllBtn.classList.remove("visibility-hidden");
     

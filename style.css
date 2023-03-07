@@ -224,3 +224,6 @@ footer p{
 .zeroOpacity{
   opacity: 1;
 }
+.display-flex{
+  display: flex !important;
+}
